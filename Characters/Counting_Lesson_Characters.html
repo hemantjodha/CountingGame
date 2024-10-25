@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counting Lesson - Choose Your Character</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffcc00;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .character-selection {
+            margin: 50px auto;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+        }
+
+        .character-option {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .character-option:hover {
+            transform: scale(1.1);
+        }
+
+        .character-img {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .quiz-container {
+            display: none; /* Initially hidden until a character is selected */
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #ffcc00;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            transition: box-shadow 0.5s ease-in-out;
+        }
+
+        .number-box {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            margin: 10px;
+            background-color: #ffcc00;
+            color: #333;
+            font-size: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .number-box:hover {
+            background-color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        #hurray-message, #oops-message {
+            font-size: 24px;
+            display: none;
+            margin-top: 20px;
+            animation: glow 1s infinite alternate;
+        }
+
+        #hurray-message {
+            color: green;
+        }
+
+        #oops-message {
+            color: red;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px, 0 0 20px, 0 0 30px;
+            }
+            to {
+                text-shadow: 0 0 20px, 0 0 30px, 0 0 40px;
+            }
+        }
+
+        .correct {
+            box-shadow: 0 0 20px 10px green;
+        }
+
+        .wrong {
+            box-shadow: 0 0 20px 10px red;
+        }
+
+        footer {
+            background-color: #ffcc00;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .play-again-button {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .play-again-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style for the Start button */
+        .start-button {
+            padding: 20px 40px;
+            font-size: 24px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.8); /* Glowing effect */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .start-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px 5px rgba(0, 255, 0, 1); /* Stronger glow on hover */
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <a href="javascript:location.reload()" style="text-decoration: none; color: inherit;">
+            <h1>Counting Lesson: Choose Your Character</h1>
+        </a>
+    </header>
+
+    <!-- Start Button -->
+    <button class="start-button" onclick="playWelcomeSound()">Start</button>
+
+<!-- Adding MP3 File to play on page load -->
+<audio id="page-load-sound" src="Amelia_Welcome_Characters.mp3" autoplay></audio>
+
+<script>
+    function playWelcomeSound() {
+        const pageLoadSound = document.getElementById('page-load-sound');
+        pageLoadSound.play();
+    }
+</script>
+
+<script>
+    // Play sound when the page loads
+    window.onload = function() {
+        const pageLoadSound = document.getElementById('page-load-sound');
+        pageLoadSound.play();
+    };
+</script>
+    <!-- Character selection screen -->
+    <div class="character-selection">
+        <div class="character-option" onclick="startGame('peppa')">
+            <img src="Peppa_Pig.jpeg" alt="Peppa Pig" class="character-img">
+            <p>Peppa Pig</p>
+        </div>
+        <div class="character-option" onclick="startGame('bluey')">
+            <img src="Bluey.png" alt="Bluey" class="character-img">
+            <p>Bluey</p>
+        </div>
+        <div class="character-option" onclick="startGame('mickey')">
+            <img src="Mickey_Mouse.jpeg" alt="Mickey Mouse" class="character-img">
+            <p>Mickey Mouse</p>
+        </div>
+        <div class="character-option" onclick="startGame('elsa')">
+            <img src="Princess_elsa.jpeg" alt="Princess Elsa" class="character-img">
+            <p>Princess Elsa</p>
+        </div>
+        <div class="character-option" onclick="startGame('minion')">
+            <img src="Minion.jpeg" alt="Minion" class="character-img">
+            <p>Minion</p>
+        </div>
+    </div>
+
+    <!-- Quiz container, initially hidden -->
+    <div class="quiz-container" id="quiz-container">
+        <h2 id="question-text">How many <span id="character-name"></span>s are there?</h2>
+        <div id="character-container"></div>
+
+        <!-- Number boxes for user to select the answer -->
+        <div>
+            <div class="number-box" onclick="checkAnswer(1)">1</div>
+            <div class="number-box" onclick="checkAnswer(2)">2</div>
+            <div class="number-box" onclick="checkAnswer(3)">3</div>
+            <div class="number-box" onclick="checkAnswer(4)">4</div>
+            <div class="number-box" onclick="checkAnswer(5)">5</div>
+        </div>
+
+        <div id="hurray-message">Hurray! You got it right!</div>
+        <div id="oops-message">Oops! Wrong answer, try again.</div>
+        <button class="play-again-button" onclick="retryQuiz()">Play Again</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Counting Fun for Kids. All rights reserved.</p>
+    </footer>
+
+    <!-- Adding MP3 Files -->
+    <audio id="correct-sound" src="Amelia_Correct_Answer.mp3"></audio>
+    <audio id="wrong-sound" src="Amelia_Wrong_Answer.mp3"></audio>
+
+    <script>
+        let selectedCharacter = '';
+        let totalCharacters = 0;
+        const characterContainer = document.getElementById('character-container');
+        const questionText = document.getElementById('question-text');
+        const characterNameSpan = document.getElementById('character-name');
+
+        // Declare variables for character images
+        const characters = {
+            peppa: {
+                name: 'Peppa Pig',
+                img: 'Peppa_Pig.jpeg'
+            },
+            bluey: {
+                name: 'Bluey',
+                img: 'Bluey.png'
+            },
+            mickey: {
+                name: 'Mickey Mouse',
+                img: 'Mickey_Mouse.jpeg'
+            },
+            elsa: {
+                name: 'Princess Elsa',
+                img: 'Princess_elsa.jpeg'
+            },
+            minion: {
+                name: 'Minion',
+                img: 'Minion.jpeg'
+            }
+        };
+
+        function startGame(character) {
+            // Hide the start button
+            const startButton = document.querySelector('.start-button');
+            if (startButton) {
+                startButton.style.display = 'none'; // Hide the button once the lesson starts
+                }
+            selectedCharacter = character;
+            document.querySelector('.character-selection').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+            characterNameSpan.innerText = characters[character].name; // Dynamic question
+            totalCharacters = generateRandomCharacters();
+        }
+
+        function generateRandomCharacters() {
+            characterContainer.innerHTML = ''; // Clear any existing images
+            const count = Math.floor(Math.random() * 5) + 1; // Generates a random number between 1 and 5
+            const characterImgSrc = characters[selectedCharacter].img;
+
+            for (let i = 0; i < count; i++) {
+                const img = document.createElement('img');
+                img.src = characterImgSrc; // Use the selected character image
+                img.alt = characters[selectedCharacter].name;
+                img.className = 'character-img';
+                characterContainer.appendChild(img);
+            }
+
+            return count;
+        }
+
+        function checkAnswer(selectedNumber) {
+            const hurrayMessage = document.getElementById('hurray-message');
+            const oopsMessage = document.getElementById('oops-message');
+            const quizContainer = document.getElementById('quiz-container');
+            const playAgainButton = document.querySelector('.play-again-button');
+            
+            const correctSound = document.getElementById('correct-sound');
+            const wrongSound = document.getElementById('wrong-sound');
+
+            if (selectedNumber === totalCharacters) {
+                hurrayMessage.style.display = 'block';
+                oopsMessage.style.display = 'none';
+                quizContainer.classList.add('correct');
+                quizContainer.classList.remove('wrong');
+                playAgainButton.style.display = 'block'; // Show play again button on correct answer
+
+                 // Play correct sound
+                 correctSound.play();
+
+            } else {
+                oopsMessage.style.display = 'block';
+                hurrayMessage.style.display = 'none';
+                quizContainer.classList.add('wrong');
+                quizContainer.classList.remove('correct');
+                playAgainButton.style.display = 'block'; // Show play again button on correct answer
+
+                // Play wrong sound
+                wrongSound.play();
+            }
+        }
+
+        function retryQuiz() {
+            const hurrayMessage = document.getElementById('hurray-message');
+            const oopsMessage = document.getElementById('oops-message');
+            const quizContainer = document.getElementById('quiz-container');
+            const playAgainButton = document.querySelector('.play-again-button');
+
+            hurrayMessage.style.display = 'none'; // Hide hurray message
+            oopsMessage.style.display = 'none'; // Hide oops message
+            quizContainer.classList.remove('correct', 'wrong'); // Remove any glowing effects
+            playAgainButton.style.display = 'none'; // Hide play again button until needed again
+
+            totalCharacters = generateRandomCharacters(); // Generate a new random set of images
+        }
+    </script>
+</body>
+</html>

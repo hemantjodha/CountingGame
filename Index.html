@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counting Lessons - Landing Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffcc00;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .lesson-selection {
+            margin: 50px auto;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+        }
+
+        .lesson-option {
+            cursor: pointer;
+            padding: 20px;
+            background-color: #ffcc00;
+            border-radius: 10px;
+            width: 250px;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .lesson-option:hover {
+            transform: scale(1.1);
+            background-color: #ffd700;
+        }
+
+        .lesson-option h2 {
+            margin: 0;
+        }
+
+        .lesson-img {
+            margin-top: 10px;
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        footer {
+            background-color: #ffcc00;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Style for the Start button */
+        .start-button {
+            padding: 20px 40px;
+            font-size: 24px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.8); /* Glowing effect */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .start-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px 5px rgba(0, 255, 0, 1); /* Stronger glow on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Counting Lessons</h1>
+    </header>
+
+    <!-- Start Button -->
+    <button class="start-button" onclick="playWelcomeSound()">Start</button>
+
+<!-- Adding MP3 File to play on page load -->
+<audio id="page-load-sound" src="Amelia_Homepage_Intro.mp3" autoplay></audio>
+
+<script>
+    function playWelcomeSound() {
+        const pageLoadSound = document.getElementById('page-load-sound');
+        pageLoadSound.play();
+    }
+</script>
+
+    <!-- Lesson selection section -->
+    <div class="lesson-selection">
+        <div class="lesson-option" onclick="location.href='Characters/Counting_Lesson_Characters.html'">
+            <h2>Count Your Favourite Character</h2>
+            <!-- Image for Character Counting -->
+            <img src="Bluey.png" alt="Bluey" class="lesson-img">
+        </div>
+        <div class="lesson-option" onclick="location.href='Animals/Counting_Lesson_Animals.html'">
+            <h2>Count Your Favourite Animal</h2>
+            <!-- Image for Animal Counting -->
+            <img src="Elephant_Intro.png" alt="Elephant" class="lesson-img">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Counting Fun for Kids. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
